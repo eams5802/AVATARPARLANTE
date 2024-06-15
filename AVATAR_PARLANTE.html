@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Pronunciador de Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #avatar {
+            margin: 20px;
+            border-radius: 50%;
+            max-width: 200px;
+        }
+        #text-to-speak {
+            width: 300px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Avatar Pronunciador de Texto</h1>
+    <div>
+        <input type="file" id="avatar-upload" accept="image/*">
+    </div>
+    <div>
+        <img id="avatar" src="" alt="Avatar">
+    </div>
+    <div>
+        <textarea id="text-to-speak" placeholder="Ingrese el texto aquí..."></textarea>
+    </div>
+    <div>
+        <button onclick="speakText()">Pronunciar Texto</button>
+    </div>
+
+    <script>
+        // Manejar la carga de la imagen del avatar
+        document.getElementById('avatar-upload').addEventListener('change', function(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const avatar = document.getElementById('avatar');
+                avatar.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        // Función para pronunciar el texto ingresado
+        function speakText() {
+            const text = document.getElementById('text-to-speak').value;
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = 'es-ES';
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
